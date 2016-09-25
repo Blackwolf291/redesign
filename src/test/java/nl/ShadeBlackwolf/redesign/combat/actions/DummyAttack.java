@@ -1,4 +1,4 @@
-package nl.ShadeBlackwolf.redesign.combat.attacks;
+package nl.ShadeBlackwolf.redesign.combat.actions;
 
 import nl.ShadeBlackwolf.redesign.combat.Attack;
 import nl.ShadeBlackwolf.redesign.combat.Enemy;

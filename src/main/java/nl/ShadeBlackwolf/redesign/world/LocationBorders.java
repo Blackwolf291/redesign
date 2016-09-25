@@ -37,13 +37,13 @@ public class LocationBorders {
 		obstructions.add(obstruction);
 	}
 	
-	public boolean isNotAvailable(int x, int y, int height, int width){
-		return (x<getLeft()||x+width>getRight()||y<getTop()||y+height>getBottom()||isInObstruction(x, y, height, width));
+	public boolean isNotAvailable(Coordinates coordinates) {
+		return (coordinates.getX()<getLeft()||coordinates.getX()+coordinates.getWidth()>getRight()||coordinates.getY()<getTop()||coordinates.getY()+coordinates.getHeight()>getBottom()||isInObstruction(coordinates));
 	}
-	
-	public boolean isInObstruction(int x, int y, int height, int width){
+
+	private boolean isInObstruction(Coordinates coordinates) {
 		for(Obstruction obs : obstructions){
-			if (obs.isInObstruction(x, y, height, width)){
+			if (obs.isInObstruction(coordinates)){
 				return true;
 			}
 		}

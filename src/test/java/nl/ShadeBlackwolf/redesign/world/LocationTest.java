@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import static nl.ShadeBlackwolf.redesign.world.Direction.*;
@@ -72,7 +71,7 @@ public class LocationTest {
 		
 		@Before
 		public void addObstructionToLocation(){
-			location.addObstruction(new Obstruction(-40, -40, 20, 80));
+			location.addObstruction(new Obstruction(new Coordinates(-40, -40, 20, 80)));
 		}
 		
 		@Test
@@ -86,6 +85,13 @@ public class LocationTest {
 			location.move(northeast);
 			assertXY(20, -20);
 		}
+		
+		@Test
+		public void cannotSlideBetweenObstaclesTooTightToFit(){
+			location.move(west);
+			location.move(north);
+			assertXY(-50, -20);
+		}
 	}
 	
 	private void assertXY(int x, int y){
@@ -93,7 +99,7 @@ public class LocationTest {
 		assertEquals("y coordinate:", y, location.getCoordinates().getY());
 	}
 	
-	public class TestLocation extends Location {
+	private class TestLocation extends Location {
 		public LocationBorders getLocationBorders(){
 			return new LocationBorders(-50, -50, 100, 100);
 		}

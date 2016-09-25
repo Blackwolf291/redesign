@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import nl.ShadeBlackwolf.redesign.combat.CombatTest;
 import nl.ShadeBlackwolf.redesign.combat.EnemyProvider;
-import nl.ShadeBlackwolf.redesign.creatures.TestDummy;
 import nl.ShadeBlackwolf.redesign.main.AttackFactory;
 
 import static nl.ShadeBlackwolf.redesign.combat.PlayerActions.attack;

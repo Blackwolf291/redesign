@@ -25,7 +25,7 @@ public class Coordinates {
 		return height;
 	}
 
-	public int getwidth(){
+	public int getWidth(){
 		return width;
 	}
 	
@@ -38,7 +38,7 @@ public class Coordinates {
 		if(dx == 0&&dy == 0){
 			return this;
 		}
-		if(locationBorders.isNotAvailable(getNextValue(x, dx), getNextValue(y, dy), height, width)){
+		if(locationBorders.isNotAvailable(new Coordinates(getNextValue(x, dx), getNextValue(y, dy), height, width))){
 			return this;
 		}
 		if(dx == 0){

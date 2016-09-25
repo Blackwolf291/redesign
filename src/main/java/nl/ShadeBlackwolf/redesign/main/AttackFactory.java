@@ -3,7 +3,7 @@ package nl.ShadeBlackwolf.redesign.main;
 import nl.ShadeBlackwolf.redesign.combat.Attack;
 import nl.ShadeBlackwolf.redesign.combat.AttackFactoryI;
 import nl.ShadeBlackwolf.redesign.combat.EnemyProvider;
-import nl.ShadeBlackwolf.redesign.combat.attacks.DummyAttack;
+import nl.ShadeBlackwolf.redesign.combat.actions.DummyAttack;
 
 public class AttackFactory implements AttackFactoryI {
 	private	EnemyProvider provider;
