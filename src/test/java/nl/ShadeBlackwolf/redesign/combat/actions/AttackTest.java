@@ -5,16 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import nl.ShadeBlackwolf.redesign.combat.Attack;
 import nl.ShadeBlackwolf.redesign.combat.CombatTest;
 import nl.ShadeBlackwolf.redesign.combat.EnemyProvider;
-import nl.ShadeBlackwolf.redesign.main.AttackFactory;
 
 import static nl.ShadeBlackwolf.redesign.combat.PlayerActions.attack;
 
 public class AttackTest extends CombatTest{
 
 	TestDummy enemy;
-	AttackFactory attackFactory;
 	EnemyProvider provider;
 	
 	@Before
@@ -23,9 +22,9 @@ public class AttackTest extends CombatTest{
 		enemy = new TestDummy(combatStatus);
 		provider = new EnemyProvider();
 		provider.setEnemy(enemy);
-		attackFactory = new AttackFactory(provider);
-		player.setAttack(attackFactory.getDummyAttack());
-		
+		Attack attack = new DummyAttack();
+		attack.setEnemy(enemy);
+		player.setAttack(attack);
 	}
 	
 	@Test

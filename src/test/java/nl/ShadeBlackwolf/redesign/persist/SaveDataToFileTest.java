@@ -18,21 +18,20 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import nl.ShadeBlackwolf.redesign.main.PersistanceFactory;
 
 import static org.hamcrest.Matchers.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class SaveDataToFileTest {
 	private File file;
-	private Saver saver;
-	private PersistableList persistableList;
+	PersistanceFactory factory;
 	
 	
 	@Before
 	public void setup(){
 		file = new File("save.sav");
-		persistableList = new PersistableList();
-		saver = new Saver(new SaveDataCollector(persistableList));
+		factory = new PersistanceFactory();
 	}
 	
 	@After
@@ -42,7 +41,7 @@ public class SaveDataToFileTest {
 	
 	@Test
 	public void saverWithoutRegisteredObjectsCreatesEmptyFile() throws IOException{
-		saver.save();
+		factory.getSaver().save();
 		assertTrue(file.exists());
 		try (BufferedReader br = new BufferedReader(new FileReader(file))){
 			assertEquals(null, br.readLine());
@@ -55,12 +54,12 @@ public class SaveDataToFileTest {
 		@Before
 		public void setupTestPersistable(){
 			testPersistable = new TestPersistable();
-			persistableList.register(testPersistable);
+			factory.registerPersistable(testPersistable);
 		}
 		
 		@Test
 		public void saverWithEmptyRegisteredObjectCreatesEmptyFile() throws IOException{
-			saver.save();
+			factory.getSaver().save();
 			assertTrue(file.exists());
 			try (BufferedReader br = new BufferedReader(new FileReader(file))){
 				assertNull(br.readLine());
@@ -76,7 +75,7 @@ public class SaveDataToFileTest {
 			public class FileTeadingContext{
 				@Test
 				public void saverWithRegisteredObjectWritesContentToFile() throws IOException{
-					saver.save();
+					factory.getSaver().save();
 					assertTrue(file.exists());
 					assertWrittenLineIn("key:value");
 				}
@@ -84,7 +83,7 @@ public class SaveDataToFileTest {
 				@Test
 				public void saverWithRegisteredObjectWritesJoinedVaraiblesToFile() throws IOException{
 					testPersistable.put("a", "b");
-					saver.save();
+					factory.getSaver().save();
 					assertTrue(file.exists());
 					assertWrittenLineIn("key:value;a:b","a:b;key:value");
 				}
@@ -93,8 +92,8 @@ public class SaveDataToFileTest {
 				public void multipleObjectsJoinsMaps() throws IOException{
 					TestPersistable p = new TestPersistable();
 					p.put("a", "b");
-					persistableList.register(p);
-					saver.save();
+					factory.registerPersistable(p);
+					factory.getSaver().save();
 					assertTrue(file.exists());
 					assertWrittenLineIn("key:value;a:b","a:b;key:value");
 				}
@@ -115,8 +114,8 @@ public class SaveDataToFileTest {
 					exception.expect(SaveDataCollector.DuplicateKey.class);
 					TestPersistable p = new TestPersistable();
 					p.put("key", "value2");
-					persistableList.register(p);
-					saver.save();
+					factory.registerPersistable(p);
+					factory.getSaver().save();
 				}
 			}
 		}

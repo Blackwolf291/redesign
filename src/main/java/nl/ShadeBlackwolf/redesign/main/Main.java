@@ -1,12 +1,19 @@
 package nl.ShadeBlackwolf.redesign.main;
 
-import nl.ShadeBlackwolf.redesign.combat.GlobalObjectsFactoryI;
-
 public class Main {
 	public static void main(String... args){
 		Main main = new Main();
+		try{
 		main.createGame();
 		main.run();
+		} catch (Throwable t) {
+			main.gracefulShutdown();
+		}
+	}
+
+	private void gracefulShutdown() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void run() {
@@ -15,5 +22,6 @@ public class Main {
 	}
 
 	private void createGame() {
+		PersistanceFactory factory = new PersistanceFactory();
 	}
 }

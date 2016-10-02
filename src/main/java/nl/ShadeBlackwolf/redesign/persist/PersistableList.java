@@ -8,8 +8,8 @@ public class PersistableList {
 	
 	private List<Persistable> persistables = new ArrayList<>();
 
-	public void register(Persistable testPersistable) {
-		persistables.add(testPersistable);
+	public void register(Persistable persistable) {
+		persistables.add(persistable);
 	}
 
 	public List<Persistable> getList() {

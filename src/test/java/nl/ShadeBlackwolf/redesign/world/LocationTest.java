@@ -1,6 +1,6 @@
 package nl.ShadeBlackwolf.redesign.world;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -77,20 +77,39 @@ public class LocationTest {
 		@Test
 		public void testEnteringObstruction(){
 			location.move(north);
-			assertXY(0, -20);
+			assertXY(0, -19);
 		}
 
 		@Test
 		public void testEnteringObstructionDiagonally(){
 			location.move(northeast);
-			assertXY(20, -20);
+			assertXY(19, -19);
 		}
 		
 		@Test
 		public void cannotSlideBetweenObstaclesTooTightToFit(){
 			location.move(west);
 			location.move(north);
-			assertXY(-50, -20);
+			assertXY(-50, -19);
+		}
+	}
+	
+	public class LocationConnectorContext{
+		private CurrentLocationProvider locationProvider;
+		
+		@Before
+		public void setUpConnector(){
+			locationProvider = new CurrentLocationProvider();
+			locationProvider.setCurrentLocation(location);
+			Connector connector = new Connector(
+					new TestLocation(), new Coordinates(30, 0, 20, 15), locationProvider);
+			location.addConnector(connector, new Coordinates(-50, 0, 10, 10));
+		}
+		
+		@Test
+		public void locationConnectorTest(){
+			location.move(west);
+			assertNotSame(location, locationProvider.getCurrentLocation());
 		}
 	}
 	

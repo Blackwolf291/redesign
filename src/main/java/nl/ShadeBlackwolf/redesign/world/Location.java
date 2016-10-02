@@ -1,14 +1,23 @@
 package nl.ShadeBlackwolf.redesign.world;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Location {
 	private Coordinates coordinates = getDefaultCoordinates();
 	private LocationBorders locationBorders;
+	private Map<Coordinates, Connector> connectors = new HashMap<>();
+	
 	public Location(){
 		locationBorders = getLocationBorders();
 	}
 	
+	public void setCoordinates(Coordinates coordinates){
+		this.coordinates = coordinates;
+	}
+	
 	public void move(Direction direction) {
-		coordinates = coordinates.move(direction, locationBorders);
+		coordinates = coordinates.move(direction, locationBorders, connectors);
 	}
 	private Coordinates getDefaultCoordinates() {
 		return new Coordinates(0,0, 20, 15);
@@ -21,6 +30,10 @@ public abstract class Location {
 
 	public void addObstruction(Obstruction obstruction) {
 		locationBorders.addObstruction(obstruction);
+	}
+	
+	public void addConnector(Connector connector, Coordinates coordinates) {
+		connectors.put(coordinates,connector);
 	}
 	
 }

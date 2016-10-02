@@ -19,8 +19,8 @@ public class Obstruction {
 		cornerInCoordinates(getRight(), getTop(), coordinates);
 	}
 	private boolean cornerInCoordinates(int x, int y, Coordinates coordinates) {
-		return y>coordinates.getY()&&y<coordinates.getY()+coordinates.getHeight()&&
-				x>coordinates.getX()&&x<coordinates.getX()+coordinates.getWidth();
+		return y>coordinates.getY()&&y<=coordinates.getY()+coordinates.getHeight()&&
+				x>coordinates.getX()&&x<=coordinates.getX()+coordinates.getWidth();
 	}
 	private boolean coordinatesInObstruction(Coordinates coordinates) {
 		return cornerInObstruction(coordinates.getX(), coordinates.getY())||
@@ -29,7 +29,7 @@ public class Obstruction {
 		cornerInObstruction(coordinates.getX()+coordinates.getWidth(), coordinates.getY());
 	}
 	private boolean cornerInObstruction(int x, int y) {
-		return y>getTop()&&y<getBottom()&&x>getLeft()&&x<getRight();
+		return y>=getTop()&&y<=getBottom()&&x>=getLeft()&&x<=getRight();
 	}
 	
 	private int getTop(){

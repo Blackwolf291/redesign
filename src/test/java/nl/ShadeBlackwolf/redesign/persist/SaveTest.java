@@ -17,17 +17,18 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import nl.ShadeBlackwolf.redesign.main.PersistanceFactory;
 
 @RunWith(HierarchicalContextRunner.class)
 public class SaveTest {
 	
 	private File file;
-	private Saver saver;
+	private PersistanceFactory factory;
 	
 	@Before
 	public void setup(){
 		file = new File("save.sav");
-		saver = new Saver(new SaveDataCollector(new PersistableList()));
+		factory = new PersistanceFactory();
 	}
 	
 	@After
@@ -37,7 +38,7 @@ public class SaveTest {
 	
 	@Test
 	public void saverCreatesFile(){
-		saver.save();
+		factory.getSaver().save();
 		assertTrue(file.exists());
 	}
 	
@@ -49,13 +50,13 @@ public class SaveTest {
 		public void saveDoesNotOverRide() throws IOException{
 			exception.expect(Saver.SaveExists.class);
 			file.createNewFile();
-			saver.save();
+			factory.getSaver().save();
 		}
 	
 		@Test
 		public void overwriteFailsIfNoOldFile() throws IOException{
 			exception.expect(Saver.NoSuchFile.class);
-			saver.overwrite("filename");
+			factory.getSaver().overwrite("filename");
 		}
 	}
 
@@ -70,7 +71,7 @@ public class SaveTest {
 		
 		@Test
 		public void saveFileNameConfigurable(){
-			saver.save(filename);
+			factory.getSaver().save(filename);
 			assertTrue(file.exists());
 		}
 		
@@ -87,13 +88,13 @@ public class SaveTest {
 			
 			@Test
 			public void overwriteMovesOldFile() throws IOException{
-				saver.overwrite("filename");
+				factory.getSaver().overwrite("filename");
 				assertFileWithContentMoved(filename);
 			}
 
 			@Test
 			public void overwriteCreatesNewSave() throws IOException{
-				saver.overwrite("filename");
+				factory.getSaver().overwrite("filename");
 				assertNewFileMade();
 			}
 			

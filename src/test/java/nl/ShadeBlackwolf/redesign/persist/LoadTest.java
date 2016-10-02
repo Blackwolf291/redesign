@@ -3,7 +3,6 @@ package nl.ShadeBlackwolf.redesign.persist;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,19 +11,18 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
+import nl.ShadeBlackwolf.redesign.main.PersistanceFactory;
 
-import static org.junit.Assert.*;
+import static nl.ShadeBlackwolf.redesign.TestUtils.*;
 
 @RunWith(HierarchicalContextRunner.class)
 public class LoadTest {
 	
-	private Loader loader;
-	private PersistableList persistableList;
+	private PersistanceFactory factory;
 	
 	@Before
 	public void setup(){
-		persistableList = new PersistableList();
-		loader = new Loader(persistableList);
+		factory = new PersistanceFactory();
 	}
 
 	public class resultCollectorContext{
@@ -33,28 +31,15 @@ public class LoadTest {
 		@Before
 		public void setupResultCollector(){
 			resultCollector = new ResultCollector();
-			persistableList.register(resultCollector);
+			factory.registerPersistable(resultCollector);
 		}
 		
 		@Test
 		public void loaderCollectsAndDistributesData(){
-			loader.Load(getFile("test-Saves/testfile.sav"));
+			factory.getLoader().Load(getFile("test-Saves/testfile.sav"));
 			assertMapEquals(getExpectedMap(), resultCollector.restoredData);
 		}
 		
-		private void assertMapEquals(Map<String, String> expectedMap, Map<String, String> actualMap) {
-			if (expectedMap.size()!=actualMap.size()){
-				fail();
-			}
-			for (Entry<String, String> entry : expectedMap.entrySet()){
-				if (actualMap.containsKey(entry.getKey())){
-					assertEquals(entry.getValue(),actualMap.get(entry.getKey()));
-				} else {
-					fail();
-				}
-			}
-		}
-
 		private Map<String, String> getExpectedMap() {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("name", "Shade");
@@ -85,19 +70,19 @@ public class LoadTest {
 		@Test
 		public void loaderFailsOnDoubleKey(){
 			exception.expect(Loader.DuplicateKey.class);
-			loader.Load(getFile("test-Saves/testfileWithDoubleKey.sav"));
+			factory.getLoader().Load(getFile("test-Saves/testfileWithDoubleKey.sav"));
 		}
 
 		@Test
 		public void loaderFailsOnThreePartEntry(){
 			exception.expect(Loader.MalformedEntry.class);
-			loader.Load(getFile("test-Saves/testfileWithThreePartEntry.sav"));
+			factory.getLoader().Load(getFile("test-Saves/testfileWithThreePartEntry.sav"));
 		}
 
 		@Test
 		public void loaderFailsOnSinglePartEntry(){
 			exception.expect(Loader.MalformedEntry.class);
-			loader.Load(getFile("test-Saves/testfileWithSinglePartEntry.sav"));
+			factory.getLoader().Load(getFile("test-Saves/testfileWithSinglePartEntry.sav"));
 		}
 	}
 
