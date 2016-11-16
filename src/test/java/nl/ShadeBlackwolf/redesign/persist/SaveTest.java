@@ -34,6 +34,7 @@ public class SaveTest {
 	@After
 	public void teardown(){
 		file.delete();
+		new File("filename.sav.old").delete();
 	}
 	
 	@Test
