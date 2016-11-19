@@ -3,11 +3,10 @@ package nl.ShadeBlackwolf.redesign;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.ShadeBlackwolf.redesign.combat.Attack;
+import nl.ShadeBlackwolf.redesign.combat.Combattant;
 
-public class Player{
+public class Player implements Combattant{
 
-	private Attack attack;
 	private String name;
 	
 	public Player(Map<String, String> data) {
@@ -15,14 +14,6 @@ public class Player{
 	}
 
 	public Player() {
-	}
-
-	public void setAttack(Attack attack){
-		this.attack = attack;
-	}
-	
-	public Attack getAttack() {
-		return attack;
 	}
 
 	public Map<String, String> getPersistedFields() {
@@ -33,5 +24,8 @@ public class Player{
 
 	public String getName() {
 		return name;
+	}
+
+	public void attack() {
 	}
 }

@@ -1,5 +1,4 @@
 package nl.ShadeBlackwolf.redesign.combat;
 
-public interface AttackFactoryI {
-
+public interface Ally extends Combattant{
 }

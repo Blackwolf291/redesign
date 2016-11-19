@@ -54,8 +54,4 @@ public class ImageLayer {
 	public Color[][] getPixels() {
 		return pixels;
 	}
-
-	public void setPixels(Color[][] pixels) {
-		this.pixels = pixels;
-	}
 }
