@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.ShadeBlackwolf.redesign.persist.Loader.EmptyFile;
+
 public class Loader {
 
 	private PersistableList persistableList;
@@ -21,6 +23,7 @@ public class Loader {
 
 	private Map<String, String> parseFile(File file) {
 		String rawData = readRawLineFromFile(file);
+		if (rawData == null){throw new EmptyFile();}
 		String[] rawEntries = rawData.split(";");
 		return parseEntriesForMap(rawEntries);
 		
@@ -46,9 +49,13 @@ public class Loader {
 	}
 	class DuplicateKey extends RuntimeException{}
 	class MalformedEntry extends RuntimeException {}
-	private class LoadFailed extends RuntimeException{
+	class LoadFailed extends RuntimeException{
 
 		public LoadFailed(IOException e) {
 			super(e);
 		}}
+
+	class EmptyFile extends RuntimeException {
+
+	}
 }

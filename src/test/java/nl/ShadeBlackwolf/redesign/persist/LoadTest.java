@@ -39,7 +39,7 @@ public class LoadTest {
 			factory.getLoader().Load(getFile("test-Saves/testfile.sav"));
 			assertMapEquals(getExpectedMap(), resultCollector.restoredData);
 		}
-		
+
 		private Map<String, String> getExpectedMap() {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("name", "Shade");
@@ -66,6 +66,18 @@ public class LoadTest {
 		
 		@Rule
 		public ExpectedException exception = ExpectedException.none();
+
+		@Test
+		public void loaderThrowsLoadFailedOnNotFindingFile(){
+			exception.expect(Loader.LoadFailed.class);
+			factory.getLoader().Load(getFile(""));
+		}
+
+		@Test
+		public void loaderThrowsOnEmptyFile(){
+			exception.expect(Loader.EmptyFile.class);
+			factory.getLoader().Load(getFile("test-Saves/emptyFile.sav"));
+		}
 		
 		@Test
 		public void loaderFailsOnDoubleKey(){
@@ -89,5 +101,4 @@ public class LoadTest {
 	private File getFile(String fileName) {
 		return new File(getClass().getClassLoader().getResource(fileName).getFile());
 	}
-	
 }
