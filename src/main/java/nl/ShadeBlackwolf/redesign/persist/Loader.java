@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.ShadeBlackwolf.redesign.persist.Loader.EmptyFile;
-
 public class Loader {
 
 	private PersistableList persistableList;
