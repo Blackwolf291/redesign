@@ -5,8 +5,8 @@ public class CombatStats {
 	public static CombatStats getCombatStats(){
 		return combatStats;
 	}
-	public boolean combatOver = false;
-	public boolean won = false;
+	private boolean combatOver = false;
+	private boolean won = false;
 
 	public void playerLoss() {
 		combatOver = true;
@@ -20,5 +20,4 @@ public class CombatStats {
 		combatOver = false;
 		won = false;
 	}
-	
 }

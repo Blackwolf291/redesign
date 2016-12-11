@@ -1,6 +1,6 @@
 package nl.ShadeBlackwolf.redesign.combat;
 
-public class AllySpy implements Ally{
+public class AllySpy extends Ally{
 
 	private boolean hasAttacked = false;
 	

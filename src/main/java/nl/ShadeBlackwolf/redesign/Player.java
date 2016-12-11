@@ -5,7 +5,7 @@ import java.util.Map;
 
 import nl.ShadeBlackwolf.redesign.combat.Combattant;
 
-public class Player implements Combattant{
+public class Player extends Combattant{
 
 	private String name;
 	

@@ -1,4 +1,4 @@
 package nl.ShadeBlackwolf.redesign.combat;
 
-public interface Ally extends Combattant{
+public abstract class Ally extends Combattant{
 }
